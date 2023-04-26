@@ -1,0 +1,122 @@
+
+
+                                  Database Name :- Shop.
+
+                                  Table Names:- Agent1
+                                                customer
+                                                orsers
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+----> create database shop;
+
+----> use shop;
+
+
+----> create table Agent1 (A_code int not null primary key,A_name varchar(25),working_area varchar(25),commision int,phone_no int);
+
+
+----> insert into Agent1 values(101,'ramasundar','kurla',010,1234567890),(102,'ramesh','dadar',020,3214567891),
+      (103,'kumar','vashi',030,3214587960),(104,'sundarlal','mulund',040,1234560987),(105,'mukesh','andheri',050,2589637410);
+
+----> select * from Agent1;
++--------+------------+--------------+-----------+------------+
+| A_code | A_name     | working_area | commision | phone_no   |
++--------+------------+--------------+-----------+------------+
+|    101 | ramasundar | kurla        |        10 | 1234567890 |
+|    102 | ramesh     | dadar        |        20 | 2147483647 |
+|    103 | kumar      | vashi        |        30 | 2147483647 |
+|    104 | sundarlal  | mulund       |        40 | 1234560987 |
+|    105 | mukesh     | andheri      |        50 | 2147483647 |
++--------+------------+--------------+-----------+------------+
+
+
+----> use shop;
+
+----> create table customer(c_code int not null primary key,c_name varchar(25),working_area varchar(25),
+      payment_amt int not null,A_code int not null references Agent1);
+
+----> insert into customer values(110,'holmes','chembur',60000,101),(120,'lucida','vadala',8000,102),
+     (130,'alex','jui',9000,103),(140,'mukesh','nerul',10000,104),(150,'ivan','panvel',11000,105);
+
+----> select * from customer;
++--------+--------+--------------+-------------+--------+
+| c_code | c_name | working_area | payment_amt | A_code |
++--------+--------+--------------+-------------+--------+
+|    110 | holmes | chembur      |       60000 |    101 |
+|    120 | lucida | vadala       |        8000 |    102 |
+|    130 | alex   | jui          |        9000 |    103 |
+|    140 | mukesh | nerul        |       10000 |    104 |
+|    150 | ivan   | panvel       |       11000 |    105 |
++--------+--------+--------------+-------------+--------+
+
+----> create table orders(o_num int not null primary key,o_amt int not null,o_date date not null,
+      c_code int not null references customer,A_code int not null references Agent1);
+
+----> insert into orders values (2001,1000,'2013-12-10',110,101),(2002,2000,'2022-12-10',120,102),
+     (2003,3000,'2021-12-10',130,103),(2004,4000,'2020-12-10',140,104),(2005,5000,'2019-12-10',150,105);
+
+----> select * from orders;
++-------+-------+------------+--------+--------+
+| o_num | o_amt | o_date     | c_code | A_code |
++-------+-------+------------+--------+--------+
+|  2001 |  1000 | 2013-12-10 |    110 |    101 |
+|  2002 |  2000 | 2022-12-10 |    120 |    102 |
+|  2003 |  3000 | 2021-12-10 |    130 |    103 |
+|  2004 |  4000 | 2020-12-10 |    140 |    104 |
+|  2005 |  5000 | 2019-12-10 |    150 |    105 |
++-------+-------+------------+--------+--------+
+
+
+  #inner outer join
+
+----->select customer.c_name,customer.working_area,Agent1.A_name,Agent1.working_area
+    -> from customer
+    -> join Agent1
+    -> on customer.A_code = Agent1.A_code;
++--------+--------------+------------+--------------+
+| c_name | working_area | A_name     | working_area |
++--------+--------------+------------+--------------+
+| holmes | chembur      | ramasundar | kurla        |
+| lucida | vadala       | ramesh     | dadar        |
+| alex   | jui          | kumar      | vashi        |
+| mukesh | nerul        | sundarlal  | mulund       |
+| ivan   | panvel       | mukesh     | andheri      |
++--------+--------------+------------+--------------+
+
+
+   #left outer join
+
+-----> select orders.o_num,customer.working_area,orders.o_amt
+    -> from orders
+    -> left join customer
+    -> on customer.c_code = orders.c_code
+    -> where orders.o_amt>2000;
++-------+--------------+-------+
+| o_num | working_area | o_amt |
++-------+--------------+-------+
+|  2003 | jui          |  3000 |
+|  2004 | nerul        |  4000 |
+|  2005 | panvel       |  5000 |
++-------+--------------+-------+
+
+
+   #right outer join
+
+-----> select Agent1.A_code,Agent1.A_name,Agent1.commision,Agent1.phone_no,customer.A_code,customer.working_area
+    -> from Agent1
+    -> right join customer
+    -> on Agent1.A_code = customer.A_code;
++--------+------------+-----------+------------+--------+--------------+
+| A_code | A_name     | commision | phone_no   | A_code | working_area |
++--------+------------+-----------+------------+--------+--------------+
+|    101 | ramasundar |        10 | 1234567890 |    101 | chembur      |
+|    102 | ramesh     |        20 | 2147483647 |    102 | vadala       |
+|    103 | kumar      |        30 | 2147483647 |    103 | jui          |
+|    104 | sundarlal  |        40 | 1234560987 |    104 | nerul        |
+|    105 | mukesh     |        50 | 2147483647 |    105 | panvel       |
++--------+------------+-----------+------------+--------+--------------+
+
+
+
+
