@@ -1,0 +1,88 @@
+
+class Bookstore :
+    def __init__(self,listofbooks):
+        self.availablebooks=listofbooks
+    
+     
+    def displayAvailablebooks(self):
+        print("The books we have in our bookstore are as follows:")
+        print("==================================")
+        for book in self.availablebooks:
+            print(book)
+           
+    def lendBook(self,requestedBook):
+        if requestedBook in self.availablebooks:
+            print("The book you requested has now been borrowed")
+            self.availablebooks.remove(requestedBook)
+        else:
+            print("sorry the book you have requested is currently not in the bookstore")
+        
+    def addBook(self,returnedBook):
+        self.availablebooks.append(returnedBook)
+        print("Thanks for returning your borrowed book")
+
+
+class Person:
+    def requestBook(self):
+        print("Enter the name of the book you'd like to borrow")
+        self.book=input()
+        return self.book
+    
+    def returnBook(self):
+        print("Enter the name of the book you'd like to return")
+        self.book=input()
+        return self.book
+
+if __name__=="__main__"::
+    bookstore=Bookstore(["python","java","machinelearning"])
+    person=Person()
+    done=False
+    while done== False:
+        print("=====BOOKSTORE MENUE=====")
+        print("1. display all available books")
+        print("2. request a book")
+        print("3. return a book")     
+        print("4. exit")
+       
+        user_choice = int(input("Enter choice"))
+            
+        if user_choice == 1:
+            bookstore.displayAvailablebooks()
+            
+        elif user_choice == 2:
+            bookstore.lendBook(person.requestBook())
+       
+
+        elif user_choice == 3:
+            bookstore.addBook(person.returnBook())
+            
+        else:
+            print("Press q to quit and c to continue")
+            user_choice2 = ""
+            while(user_choice2!="c" and user_choice2!="q"): 
+                user_choice2 = input()
+            
+            if user_choice2 == "c":
+                continue
+                
+
+            else:
+                user_choice2 == "q"
+                break
+            
+            
+       
+      
+            
+            
+       
+      
+                  
+                  
+                  
+                  
+                  
+                  
+              
+            
+    
