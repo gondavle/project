@@ -1,0 +1,26 @@
+import requests
+from bs4 import BeautifulSoup
+
+r=requests.get("https://en.wikipedia.org/wiki/Apple_Inc")
+r
+soup=BeautifulSoup(r.text,"html.parser")
+soup
+data=soup.find_all("div",class_="vector-body")
+data
+
+title=soup.find_all("h1")
+content=soup.find_all("h2")
+para=soup.find_all("p")
+for h1 in title:
+    print(h1.get_text(strip=True))
+
+    for h2 in content:
+        print(h2.get_text(strip=True))
+
+    full_content_length=0
+    for p in para:
+        print(p.get_text(strip=True))
+        paragraph_length=(len(p.get_text(strip=True,separator=' ').split()))
+        full_content_length = full_content_length + paragraph_length
+    print( full_content_length )
+    
